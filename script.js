@@ -1,6 +1,7 @@
 let atlantis;
 let fishALL = [];
 let scene;
+let fadeValue = 0;
 
 function preload(){
   atlantis = loadImage("atlantis.png");
@@ -10,10 +11,99 @@ function preload(){
 	spinFish = loadImage("spinfish.png");
 	myFont = loadFont("roll.otf");
 	casFront = loadImage("atlantisfront.png");
-	forked = loadImage("forked.jpeg");
-	optone = loadImage("optone.jpg");
-	opttwo = loadImage("opttwo.jpg");
+	castle = loadImage("castle.png");
+	optOne = loadImage("optone.jpg");
+	optTwo = loadImage("opttwo.jpg");
+	ship = loadImage("ship.png");
+	eye = loadImage("eye.png");
+	ghost = loadImage("ghost.png");
+	kelp = loadImage("kelp.png");
 }
+
+function fadeBlue() {
+    let startColor = color(162, 214, 235);
+    let endColor = color(24, 23, 74);
+    fadeValue += 0.002;
+    let colorTransition = (lerpColor(startColor,endColor,fadeValue));
+    if (fadeValue >= 1){
+        fadeValue = 0.0;
+    }
+    background(colorTransition);
+}   
+function fadeGreen() {
+    let startColor = color(65, 148, 130);
+    let endColor = color(1, 54, 42);
+    fadeValue += 0.002;
+    let colorTransition = (lerpColor(startColor,endColor,fadeValue));
+    if (fadeValue >= 1){
+        fadeValue = 0.0;
+    }
+    background(colorTransition);
+}   
+
+function submarine(){
+  fill(227, 64, 102)
+  stroke(0, 21, 255)
+  strokeWeight(3);
+  rect(windowWidth/2-15, windowHeight/2-190, 30, 140)
+  rect(windowWidth/2-50, windowHeight/2-90, 100, 50)
+  ellipse(windowWidth/2-25, windowHeight/2-150, 50, 15)
+  ellipse(windowWidth/2+30, windowHeight/2-190, 90, 40)
+  strokeWeight(1.5)
+  fill(242, 116, 146)
+  ellipse(windowWidth/2+30, windowHeight/2-190, 70, 20)
+  fill(247, 207, 45)
+  stroke(196, 163, 26)
+  strokeWeight(4)
+  ellipse(windowWidth/2, windowHeight/2, 350, 100)
+  push()
+  translate(windowWidth/2-350, windowHeight/2-330)
+  beginShape()
+    fill(227, 64, 102);
+    stroke(0, 21, 255)
+    strokeWeight(10);
+    vertex(190, 301)
+    vertex(157, 242)
+    vertex(115, 233)
+    vertex(135, 277)
+    vertex(59, 246)
+    vertex(31, 289)
+    vertex(93, 281)
+    vertex(138, 312)
+    vertex(19, 310)
+    vertex(91, 343)
+    vertex(82, 371)
+    vertex(118, 378)
+    vertex(144, 419)
+    vertex(155, 383)
+    vertex(189, 391)
+    vertex(208, 352)
+  endShape()
+  pop()
+  stroke(196, 163, 26)
+  strokeWeight(7)
+  fill(247, 207, 45)
+  ellipse(windowWidth/2-150, windowHeight/2, 60, 60)
+  stroke(119, 126, 199)
+  strokeWeight(4)
+  fill(random(150, 255), random(150, 255), random(150, 255));
+  ellipse(windowWidth/2-90, windowHeight/2, 30, 30)
+  ellipse(windowWidth/2-30, windowHeight/2, 30, 30)
+  ellipse(windowWidth/2+30, windowHeight/2, 30, 30)
+  strokeWeight(3)
+  fill(0, 21, 255)
+  ellipse(windowWidth/2+100, windowHeight/2, 45, 45)
+  fill(61, 77, 255)
+  ellipse(windowWidth/2+100, windowHeight/2, 35, 35)
+  fill(156, 164, 255)
+  ellipse(windowWidth/2+100, windowHeight/2, 25, 25)
+  fill(0)
+  ellipse(windowWidth/2+100, windowHeight/2, 15, 15)
+  noStroke()
+  fill(255)
+  ellipse(windowWidth/2+100, windowHeight/2, 5, 5)
+}
+
 
 function purpFish(){
 	strokeWeight(2)
@@ -114,12 +204,13 @@ function draw(){
 		textWrap(WORD);
 		text("You explore atlantis.", 490,50);
 		text("This is a utopian city once lost and sunken underwater.", 190, 150);
-		text("It has now resurfaced and so begins your adventure. ", 210, 250);
+		text("It has now resurfaced and so begins your adventure. ", 190, 250);
+		text("Down into the submarine you go...", 370, 350);
 	}
 	if(frameCount > 850 && frameCount < 860){
 		scene = 0
 	}
-	if (scene == 0){
+	if (scene == 0){ 
 		if (scene == 0 && key == ' '){ // press space to switch scenes
 			scene = 1;
 		}
@@ -154,21 +245,129 @@ function draw(){
       fishALL[i].moveFish()
     }
 	}
-	if(scene == 1){ 
+	if(scene == 1){
+		fadeBlue()
+		for(let i=0; i<1000; i++){
+			let x = random(width);
+			let y = random(height);
+			let diameter = random(y/20.0);
+			noStroke();
+			fill(random(30,100),random(50,100),random(255,100),127);
+			ellipse(x,y,diameter,diameter);
+		}
+		submarine() // tried to use sprite but would delete sin waves if done for some reason
+		fill(255, 64, 116);
+		rect(1150, 500, 200,100)
+		fill(250, 217, 226);
+		textSize(32);
+		text("CONTINUE", 1165, 560);
+		
+	}
+	if(scene == 2){ 
 		background(5, 51, 77);
 		tint(255, 126);
-		image(forked, 0,0);
+		image(castle, 0,0);
 		noTint();
+		fill(212, 255, 246);
+  	rect(227, 248, 350);
+		image(optOne, 227, 248);
+		optOne.resize(350, 350);
+		if (mouseX > 227 && mouseX < 577 && mouseY > 251 && mouseY < 599){
+			fill(65, 148, 130);
+			rect(227, 248, 350);
+			fill(212, 255, 246);
+			textSize(45);
+			text("Enter The ", 310, 352);
+			text("Captains Ship", 290, 433);
+		}
+		image(optTwo, 818, 248);
+		optTwo.resize(350,350);
+		if (mouseX > 818 && mouseX < 1168 && mouseY > 251 && mouseY < 599){
+			fill(30, 2, 87);
+			rect(818, 248, 350);
+			fill(229, 217, 255);
+			textSize(45);
+			text("Enter The ", 910, 352);
+			text("Kelp Forest", 890, 433);
+		}
+		fill(136, 169, 189);
 		textFont(myFont);
 		textSize(50);
 		textWrap(WORD);
 		text("Swimming up to the city,", 490,50);
 		text("You stumble upon a forked road", 400, 150);
-		image(optone,200,300, 350,350);
-		image(opttwo,900,300, 350, 350);
-		fill(58, 25, 158)
-		circle(750,500,100);
-		fill(202, 173, 217)
-		text("OR", 730, 500)
+	}
+	if (scene==3){
+		fadeGreen();
+			for(let i=0; i<900; i++){
+			let x = random(width);
+			let y = random(height);
+			let diameter = random(y/50.0);
+			noStroke();
+			fill(random(0,140),random(153,255),random(255,100),127);
+			ellipse(x,y,diameter,diameter);
+			}
+		beginShape();
+		fill(0);
+			vertex(1434, 772)
+			vertex(1434, 395)
+			vertex(1299, 379)
+			vertex(1269, 452)
+			vertex(1202, 524)
+			vertex(1206, 594)
+			vertex(1112, 655)
+			vertex(998, 772)
+			vertex(1434, 772)
+		endShape();
+    fill(1, 54, 42);
+		beginShape();
+		fill(10, 41, 34);
+			vertex(0, 773)
+			vertex(0, 713)
+			vertex(264, 666)
+			vertex(612, 568)
+			vertex(1067, 579)
+			vertex(1229, 765)
+			vertex(0, 773)
+		endShape();
+		image(ship, 417,153);
+		image(eye,1164, 399);
+		eye.resize(300,300);
+		fill(0);
+		fill(255);
+		textSize(30);
+		text("YOU STOLE FROM THE CAPTAIN?", 39, 137)
+		text("The city of Atlantis:", 39, 197)
+		text("orders for your death.", 39, 257);
+		text("Shame for greed.", 39, 318);
+		}
+	
+	if (scene==4){
+		background(30, 2, 87);
+		image(ghost, 334, 177);
+		ghost.resize(800, 700);
+		image(kelp,170, 616);
+		image(kelp,0, 773);
+		textSize(15);
+    text(mouseX,20,20);
+    text(mouseY,1272,680);
+	}
+	
+	print(scene);
+}
+function mouseReleased(){
+	if(scene == 1){
+		if(mouseX > 1150 && mouseX < 1349 && mouseY > 502 && mouseY < 603){
+			scene = 2;
+		}
+	}
+	if(scene == 2){
+		if (mouseX > 227 && mouseX < 577 && mouseY > 251 && mouseY < 599){
+			scene = 3;
+		}
+		if (mouseX > 818 && mouseX < 1168 && mouseY > 251 && mouseY < 599){
+			scene = 4;
+		}
 	}
 }
+
