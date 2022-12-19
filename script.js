@@ -344,13 +344,26 @@ function draw(){
 	
 	if (scene==4){
 		background(30, 2, 87);
+		for(let i=0; i<1000; i++){
+			let x = random(width);
+			let y = random(height);
+			let diameter = random(y/20.0);
+			noStroke();
+			fill(random(0,134),random(0,100),random(64,255),127);
+			ellipse(x,y,diameter,diameter);
+		}
 		image(ghost, 334, 177);
-		ghost.resize(800, 700);
-		image(kelp,170, 616);
-		image(kelp,0, 773);
-		textSize(15);
-    text(mouseX,20,20);
-    text(mouseY,1272,680);
+		ghost.resize(800, 400);
+		image(kelp,170, 426);
+		image(kelp,0, 700);
+		image(kelp,1000, 426);
+		kelp.resize(300,400);
+		image(kelp,300, 426);
+		fill(255);
+		textSize(30);
+		text("The Ghost Leviathan Likes You.", 39, 137)
+		text("They take you to the Center of Treasures", 39, 197)
+		text("You Survive.", 39, 257)
 	}
 	
 	print(scene);
